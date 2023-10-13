@@ -6,6 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const mongoSanitize = require("express-mongo-sanitize");
+const todoRoutes = require("./routes/todoRoutes");
 
 const app = express();
 const port = process.env.API_PORT;
@@ -32,6 +33,6 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize());
-
+app.use("/todos", todoRoutes);
 
 app.listen(port, () => console.log("Listening on port " + port));
