@@ -29,8 +29,8 @@ const todoSchema = new Schema({
   },
 });
 
-todoSchema.statics.findByIdAndToggle = async function (id) {
-  const foundTodo = await this.findById(id);
+todoSchema.statics.findOneAndToggle = async function (groupId, todoId) {
+  const foundTodo = await this.findOne({ _id: todoId, todoGroup: groupId });
   foundTodo.completed = !foundTodo.completed;
   await foundTodo.save();
   return foundTodo;

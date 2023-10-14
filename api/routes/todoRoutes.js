@@ -99,4 +99,13 @@ router
     })
   );
 
+router.put(
+  "/:groupId/:todoId/completed",
+  catchAsync(async (req, res) => {
+    const { groupId, todoId } = req.params;
+    const todo = await Todo.findOneAndToggle(groupId, todoId);
+    res.json(todo);
+  })
+);
+
 module.exports = router;
