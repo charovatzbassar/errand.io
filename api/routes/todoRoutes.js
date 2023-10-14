@@ -3,6 +3,7 @@ const TodoGroup = require("../models/TodoGroup");
 const Todo = require("../models/Todo");
 const router = express.Router();
 const { catchAsync } = require("../utils/catchAsync");
+const { validateTodo, validateTodoGroup } = require("../middleware");
 
 router
   .route("/")
@@ -13,6 +14,7 @@ router
     })
   )
   .post(
+    validateTodoGroup,
     catchAsync(async (req, res) => {
       const newTodoGroup = new TodoGroup({ title: req.body.title });
       await newTodoGroup.save();
@@ -23,6 +25,7 @@ router
 router
   .route("/:groupId")
   .put(
+    validateTodoGroup,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
 
@@ -49,6 +52,7 @@ router
     })
   )
   .post(
+    validateTodo,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
       const newTodo = new Todo({
@@ -67,6 +71,7 @@ router
 router
   .route("/:groupId/:todoId")
   .put(
+    validateTodo,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
       const todo = await Todo.findOneAndUpdate(
