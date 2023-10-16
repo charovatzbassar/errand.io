@@ -103,7 +103,16 @@ router.put(
   "/:groupId/:todoId/completed",
   catchAsync(async (req, res) => {
     const { groupId, todoId } = req.params;
-    const todo = await Todo.findOneAndToggle(groupId, todoId);
+    const todo = await Todo.findOneAndToggle(groupId, todoId, "completed");
+    res.json(todo);
+  })
+);
+
+router.put(
+  "/:groupId/:todoId/urgent",
+  catchAsync(async (req, res) => {
+    const { groupId, todoId } = req.params;
+    const todo = await Todo.findOneAndToggle(groupId, todoId, "urgent");
     res.json(todo);
   })
 );

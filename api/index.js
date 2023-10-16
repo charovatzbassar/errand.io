@@ -34,6 +34,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize());
+
 app.use("/todos", todoRoutes);
 
 app.all("*", (req, res, next) => {
