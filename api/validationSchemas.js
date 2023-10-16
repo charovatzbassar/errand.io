@@ -30,6 +30,7 @@ module.exports.todoGroupSchema = Joi.object({
 
 module.exports.todoSchema = Joi.object({
   title: Joi.string().required().escapeHTML(),
-  content: Joi.string().required().escapeHTML(),
+  content: Joi.string().escapeHTML(),
   urgent: Joi.boolean().required(),
+  deadline: Joi.date().min(new Date()),
 }).required();
