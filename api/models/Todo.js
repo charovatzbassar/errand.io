@@ -29,9 +29,13 @@ const todoSchema = new Schema({
   },
 });
 
-todoSchema.statics.findOneAndToggle = async function (groupId, todoId, action) {
+todoSchema.statics.findOneAndToggle = async function (
+  groupId,
+  todoId,
+  toggleField
+) {
   const foundTodo = await this.findOne({ _id: todoId, todoGroup: groupId });
-  foundTodo[action] = !foundTodo[action];
+  foundTodo[toggleField] = !foundTodo[toggleField];
   await foundTodo.save();
   return foundTodo;
 };
