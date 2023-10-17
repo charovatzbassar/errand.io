@@ -104,7 +104,8 @@ router.put(
   "/:groupId/:todoId/:attribute",
   catchAsync(async (req, res) => {
     const { groupId, todoId, attribute } = req.params;
-    if (attribute !== "completed" && attribute !== "urgent") {
+    const attributes = ["completed", "urgent"];
+    if (!attributes.includes(attribute)) {
       throw new ExpressError("Invalid attribute", 400);
     }
 
