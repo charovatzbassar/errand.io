@@ -4,6 +4,7 @@ const Todo = require("../models/Todo");
 const router = express.Router();
 const { catchAsync } = require("../utils/catchAsync");
 const { validateTodo, validateTodoGroup } = require("../middleware");
+const ExpressError = require("../utils/ExpressError");
 
 router
   .route("/")
@@ -100,19 +101,14 @@ router
   );
 
 router.put(
-  "/:groupId/:todoId/completed",
+  "/:groupId/:todoId/:attribute",
   catchAsync(async (req, res) => {
-    const { groupId, todoId } = req.params;
-    const todo = await Todo.findOneAndToggle(groupId, todoId, "completed");
-    res.json(todo);
-  })
-);
+    const { groupId, todoId, attribute } = req.params;
+    if (attribute !== "completed" && attribute !== "urgent") {
+      throw new ExpressError("Invalid attribute", 400);
+    }
 
-router.put(
-  "/:groupId/:todoId/urgent",
-  catchAsync(async (req, res) => {
-    const { groupId, todoId } = req.params;
-    const todo = await Todo.findOneAndToggle(groupId, todoId, "urgent");
+    const todo = await Todo.findOneAndToggle(groupId, todoId, attribute);
     res.json(todo);
   })
 );
