@@ -25,12 +25,23 @@ const extension = (joi) => ({
 const Joi = BaseJoi.extend(extension);
 
 module.exports.todoGroupSchema = Joi.object({
-  title: Joi.string().required().escapeHTML(),
+  title: Joi.string()
+    .required()
+    .escapeHTML()
+    .messages({ "any.required": "Group title is required!" }),
 }).required();
 
 module.exports.todoSchema = Joi.object({
-  title: Joi.string().required().escapeHTML(),
+  title: Joi.string()
+    .required()
+    .escapeHTML()
+    .messages({ "any.required": "Todo title is required!" }),
   content: Joi.string().escapeHTML(),
-  urgent: Joi.boolean().required(),
-  deadline: Joi.date().min(new Date()),
+  urgent: Joi.boolean()
+    .required()
+    .messages({ "any.required": "Urgent field is required!" }),
+
+  deadline: Joi.date()
+    .min(new Date())
+    .messages({ "date.min": "Deadline cannot be in the past!" }),
 }).required();
