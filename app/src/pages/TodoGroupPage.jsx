@@ -12,12 +12,16 @@ const TodoGroupPage = () => {
 
   useEffect(() => {
     const fetchTodos = async () => {
-      const res = await axios.get(`http://localhost:3000/todos/${groupId}`);
-      setGroup(res.data);
+      try {
+        const res = await axios.get(`http://localhost:3000/todos/${groupId}`);
+        setGroup(res.data);
+      } catch (e) {
+        console.error(e);
+      }
     };
 
     fetchTodos();
-  }, [groupId]);
+  }, [groupId, group]);
 
   const deleteGroupHandler = () => {
     axios
@@ -29,9 +33,25 @@ const TodoGroupPage = () => {
       .catch((e) => console.error(e));
   };
 
+  const toggleAttributeHandler = async (attribute, todoId) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/todos/${groupId}/${todoId}/${attribute}`
+      );
+      setGroup((currentGroup) =>
+        currentGroup.map((todo) => {
+          return { ...todo, [res.data[attribute]]: res.data[attribute] };
+        })
+      );
+      console.log("Attribute toggled!");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <>
-      <TodoGroup group={group} />
+      <TodoGroup group={group} toggleAttribute={toggleAttributeHandler} />
       <button onClick={deleteGroupHandler}>Delete Group</button>
     </>
   );

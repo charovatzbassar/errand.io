@@ -12,14 +12,18 @@ const TodoPage = () => {
 
   useEffect(() => {
     const fetchTodos = async () => {
-      const res = await axios.get(
-        `http://localhost:3000/todos/${groupId}/${todoId}`
-      );
-      setTodo(res.data[0]);
+      try {
+        const res = await axios.get(
+          `http://localhost:3000/todos/${groupId}/${todoId}`
+        );
+        setTodo(res.data[0]);
+      } catch (e) {
+        console.error(e);
+      }
     };
 
     fetchTodos();
-  }, [groupId, todoId]);
+  }, [groupId, todoId, todo]);
 
   const deleteTodoHandler = () => {
     axios
@@ -31,9 +35,25 @@ const TodoPage = () => {
       .catch((e) => console.error(e));
   };
 
+  const toggleAttributeHandler = async (attribute) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/todos/${groupId}/${todoId}/${attribute}`
+      );
+      setTodo({ ...todo, [res.data[attribute]]: res.data[attribute] });
+      console.log("Attribute toggled!");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <>
-      <Todo todo={todo} />
+      <Todo
+        todo={todo}
+        toggleUrgent={() => toggleAttributeHandler("urgent")}
+        toggleCompleted={() => toggleAttributeHandler("completed")}
+      />
       <button onClick={deleteTodoHandler}>Delete</button>
     </>
   );
