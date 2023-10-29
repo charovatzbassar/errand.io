@@ -56,3 +56,11 @@ export const getTodoGroups = async () => {
     console.error(e);
   }
 };
+
+export const createTodoGroup = async (data) => {
+  try {
+    await axios.post("http://localhost:3000/todos", data);
+  } catch (e) {
+    console.error(e);
+  }
+};
