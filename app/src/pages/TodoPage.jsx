@@ -25,14 +25,13 @@ const TodoPage = () => {
     fetchTodos();
   }, [groupId, todoId, todo]);
 
-  const deleteTodoHandler = () => {
-    axios
-      .delete(`http://localhost:3000/todos/${groupId}/${todoId}`)
-      .then(() => {
-        console.log("Todo deleted!");
-        navigate(`/todos/${groupId}`);
-      })
-      .catch((e) => console.error(e));
+  const deleteTodoHandler = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/todos/${groupId}/${todoId}`);
+      navigate(`/todos/${groupId}`);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const toggleAttributeHandler = async (attribute) => {
