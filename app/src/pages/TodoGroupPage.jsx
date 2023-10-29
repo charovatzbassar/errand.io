@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import TodoGroup from "../components/TodoGroup";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { toggleAttribute, getTodoGroup, deleteTodoGroup } from "../utils/api";
 
 const TodoGroupPage = () => {
   const [group, setGroup] = useState([]);
@@ -13,8 +13,8 @@ const TodoGroupPage = () => {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/todos/${groupId}`);
-        setGroup(res.data);
+        const currentTodos = await getTodoGroup(groupId);
+        setGroup(currentTodos);
       } catch (e) {
         console.error(e);
       }
@@ -25,7 +25,7 @@ const TodoGroupPage = () => {
 
   const deleteGroupHandler = async () => {
     try {
-      await axios.delete(`http://localhost:3000/todos/${groupId}`);
+      await deleteTodoGroup(groupId);
       navigate("/todos");
     } catch (e) {
       console.error(e);
@@ -34,15 +34,16 @@ const TodoGroupPage = () => {
 
   const toggleAttributeHandler = async (attribute, todoId) => {
     try {
-      const res = await axios.put(
-        `http://localhost:3000/todos/${groupId}/${todoId}/${attribute}`
+      const toggledAttribute = await toggleAttribute(
+        todoId,
+        groupId,
+        attribute
       );
       setGroup((currentGroup) =>
         currentGroup.map((todo) => {
-          return { ...todo, [res.data[attribute]]: res.data[attribute] };
+          return { ...todo, [attribute]: toggledAttribute };
         })
       );
-      console.log("Attribute toggled!");
     } catch (e) {
       console.error(e);
     }

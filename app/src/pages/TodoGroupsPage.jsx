@@ -1,6 +1,6 @@
 import TodoGroups from "../components/TodoGroups";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getTodoGroups } from "../utils/api";
 
 const TodoGroupsPage = () => {
   const [todoGroups, setTodoGroups] = useState([]);
@@ -8,8 +8,8 @@ const TodoGroupsPage = () => {
   useEffect(() => {
     const fetchTodoGroups = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/todos");
-        setTodoGroups(res.data);
+        const currentTodoGroups = await getTodoGroups();
+        setTodoGroups(currentTodoGroups);
       } catch (e) {
         console.error(e);
       }
