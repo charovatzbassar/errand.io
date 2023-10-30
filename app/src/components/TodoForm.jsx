@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 const TodoForm = ({ action, onSubmit, data = {} }) => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -21,42 +23,39 @@ const TodoForm = ({ action, onSubmit, data = {} }) => {
       break;
   }
 
+  useEffect(() => {
+    if (action === "EDIT")
+      reset({
+        title: data.title,
+        content: data.content,
+        urgent: data.urgent,
+        deadline: data.deadline,
+      });
+  }, [data, reset, action]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="title">Title</label>
       <div className="form-group">
         <input
+          {...register("title", { required: "Todo title is required!" })}
           type="text"
-          {...register("title", { required: "Group title is required!" })}
-          defaultValue={data.title}
         />
         <div className="error">{errors.title && errors.title.message}</div>
       </div>
       <label htmlFor="content">Content</label>
       <div className="form-group">
-        <input
-          type="text"
-          {...register("content")}
-          defaultValue={data.content}
-        />
+        <input {...register("content")} type="text" />
         <div className="error">{errors.content && errors.content.message}</div>
       </div>
       <label htmlFor="urgent">Urgent</label>
       <div className="form-group">
-        <input
-          type="checkbox"
-          {...register("urgent")}
-          defaultValue={data.urgent}
-        />
+        <input {...register("urgent")} type="checkbox" />
         <div className="error">{errors.urgent && errors.urgent.message}</div>
       </div>
       <label htmlFor="deadline">Deadline</label>
       <div className="form-group">
-        <input
-          type="date"
-          {...register("deadline")}
-          defaultValue={data.deadline}
-        />
+        <input {...register("deadline")} type="date" />
         <div className="error">
           {errors.deadline && errors.deadline.message}
         </div>

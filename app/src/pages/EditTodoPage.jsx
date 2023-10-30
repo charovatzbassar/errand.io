@@ -20,7 +20,13 @@ const EditTodoPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      await updateTodo(todoId, groupId, data);
+      const updatedTodoData = {
+        title: data.title,
+        urgent: data.urgent,
+        ...(data.content && { content: data.content }),
+        ...(data.deadline && { deadline: data.deadline }),
+      };
+      await updateTodo(todoId, groupId, updatedTodoData);
       navigate(`/todos/${groupId}/${todoId}`);
     } catch (e) {
       console.error(e);

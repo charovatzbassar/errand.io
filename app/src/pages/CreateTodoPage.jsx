@@ -8,7 +8,14 @@ const CreateTodoPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      await createTodo(groupId, data);
+      const todoData = {
+        title: data.title,
+        urgent: data.urgent,
+        ...(data.content && { content: data.content }),
+        ...(data.deadline && { deadline: data.deadline }),
+      };
+
+      await createTodo(groupId, todoData);
       navigate(`/todos/${groupId}`);
     } catch (e) {
       console.error(e);

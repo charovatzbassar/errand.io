@@ -96,7 +96,6 @@ export const updateTodo = async (todoId, groupId, newTodo) => {
       `http://localhost:3000/todos/${groupId}/${todoId}`,
       newTodo
     );
-    console.log("Updated todo!");
   } catch (e) {
     console.error(e);
   }
