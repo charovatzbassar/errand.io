@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-const TodoGroupForm = ({ action, onSubmit }) => {
+const TodoGroupForm = ({ action, onSubmit, data = {} }) => {
   const {
     handleSubmit,
     register,
@@ -28,6 +28,7 @@ const TodoGroupForm = ({ action, onSubmit }) => {
         <input
           type="text"
           {...register("title", { required: "Group title is required!" })}
+          defaultValue={data.title}
         />
         <div className="error">{errors.title && errors.title.message}</div>
       </div>

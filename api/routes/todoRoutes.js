@@ -69,6 +69,15 @@ router
     })
   );
 
+router.get(
+  "/:groupId/data",
+  catchAsync(async (req, res) => {
+    const { groupId } = req.params;
+    const todoGroup = await TodoGroup.findById(groupId);
+    res.json(todoGroup);
+  })
+);
+
 router
   .route("/:groupId/:todoId")
   .put(

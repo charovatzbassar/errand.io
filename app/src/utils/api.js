@@ -72,3 +72,12 @@ export const updateTodoGroup = async (groupId, newTodoGroup) => {
     console.error(e);
   }
 };
+
+export const getTodoGroupData = async (groupId) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/todos/${groupId}/data`);
+    return res.data;
+  } catch (e) {
+    console.error(e);
+  }
+};
