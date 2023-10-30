@@ -12,7 +12,13 @@ const EditTodoPage = () => {
   useEffect(() => {
     const fetchTodoData = async () => {
       const data = await getTodo(todoId, groupId);
-      setTodoData(data);
+      const formattedData = {
+        ...data,
+        ...(data.deadline && {
+          deadline: data.deadline.slice(0, 10),
+        }),
+      };
+      setTodoData(formattedData);
     };
 
     fetchTodoData();
@@ -26,6 +32,7 @@ const EditTodoPage = () => {
         ...(data.content && { content: data.content }),
         ...(data.deadline && { deadline: data.deadline }),
       };
+
       await updateTodo(todoId, groupId, updatedTodoData);
       navigate(`/todos/${groupId}/${todoId}`);
     } catch (e) {
