@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Todo = ({ todo, toggleUrgent, toggleCompleted }) => {
-  
-
+const Todo = ({ todo = {}, toggleUrgent, toggleCompleted }) => {
   return (
     <div key={todo._id}>
       <Link to={`/todos/${todo.todoGroup}/${todo._id}`}>

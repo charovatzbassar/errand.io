@@ -81,3 +81,23 @@ export const getTodoGroupData = async (groupId) => {
     console.error(e);
   }
 };
+
+export const createTodo = async (groupId, todo) => {
+  try {
+    await axios.post(`http://localhost:3000/todos/${groupId}`, todo);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const updateTodo = async (todoId, groupId, newTodo) => {
+  try {
+    await axios.put(
+      `http://localhost:3000/todos/${groupId}/${todoId}`,
+      newTodo
+    );
+    console.log("Updated todo!");
+  } catch (e) {
+    console.error(e);
+  }
+};

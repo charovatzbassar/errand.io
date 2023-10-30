@@ -52,6 +52,9 @@ const TodoPage = () => {
         toggleUrgent={() => toggleAttributeHandler("urgent")}
         toggleCompleted={() => toggleAttributeHandler("completed")}
       />
+      <button
+        onClick={() => navigate(`/todos/${groupId}/${todoId}/edit`)}
+      >Edit</button>
       <button onClick={deleteTodoHandler}>Delete</button>
     </>
   );

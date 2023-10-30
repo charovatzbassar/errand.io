@@ -52,6 +52,9 @@ const TodoGroupPage = () => {
   return (
     <>
       <TodoGroup group={group} toggleAttribute={toggleAttributeHandler} />
+      <button onClick={() => navigate(`/todos/${groupId}/new`)}>
+        New Todo
+      </button>
       <button onClick={() => navigate(`/todos/${groupId}/edit`)}>
         Edit Group
       </button>

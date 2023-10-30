@@ -1,6 +1,6 @@
 import Todo from "./Todo";
 
-const TodoGroup = ({ group, toggleAttribute }) => {
+const TodoGroup = ({ group = [], toggleAttribute }) => {
   return (
     <>
       {group.map((todo) => (
