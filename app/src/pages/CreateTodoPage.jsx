@@ -16,6 +16,7 @@ const CreateTodoPage = () => {
   };
   return (
     <>
+      <button onClick={() => navigate(`/todos/${groupId}`)}>Back</button>
       <TodoForm action="CREATE" onSubmit={onSubmit} />
     </>
   );

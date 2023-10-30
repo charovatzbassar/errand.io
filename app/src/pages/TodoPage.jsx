@@ -47,14 +47,15 @@ const TodoPage = () => {
 
   return (
     <>
+      <button onClick={() => navigate(`/todos/${groupId}`)}>Back</button>
       <Todo
         todo={todo}
         toggleUrgent={() => toggleAttributeHandler("urgent")}
         toggleCompleted={() => toggleAttributeHandler("completed")}
       />
-      <button
-        onClick={() => navigate(`/todos/${groupId}/${todoId}/edit`)}
-      >Edit</button>
+      <button onClick={() => navigate(`/todos/${groupId}/${todoId}/edit`)}>
+        Edit
+      </button>
       <button onClick={deleteTodoHandler}>Delete</button>
     </>
   );

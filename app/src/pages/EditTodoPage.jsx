@@ -29,6 +29,9 @@ const EditTodoPage = () => {
 
   return (
     <>
+      <button onClick={() => navigate(`/todos/${groupId}/${todoId}`)}>
+        Back
+      </button>
       <TodoForm action="EDIT" onSubmit={onSubmit} data={todoData} />
     </>
   );
