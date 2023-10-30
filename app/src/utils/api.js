@@ -57,9 +57,17 @@ export const getTodoGroups = async () => {
   }
 };
 
-export const createTodoGroup = async (data) => {
+export const createTodoGroup = async (todoGroup) => {
   try {
-    await axios.post("http://localhost:3000/todos", data);
+    await axios.post("http://localhost:3000/todos", todoGroup);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const updateTodoGroup = async (groupId, newTodoGroup) => {
+  try {
+    await axios.put(`http://localhost:3000/todos/${groupId}`, newTodoGroup);
   } catch (e) {
     console.error(e);
   }
