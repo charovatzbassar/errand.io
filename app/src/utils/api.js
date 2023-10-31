@@ -6,7 +6,7 @@ export const toggleAttribute = async (todoId, groupId, attribute) => {
       `http://localhost:3000/todos/${groupId}/${todoId}/${attribute}`
     );
 
-    return res.data.attribute;
+    return res.data[attribute];
   } catch (e) {
     console.error(e);
   }

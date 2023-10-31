@@ -13,7 +13,7 @@ const TodoGroupPage = () => {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const currentTodos = await getTodoGroup(groupId);
+        const currentTodos = await getTodoGroup(groupId); // problem
         setGroup(currentTodos);
       } catch (e) {
         console.error(e);
@@ -21,7 +21,7 @@ const TodoGroupPage = () => {
     };
 
     fetchTodos();
-  }, [groupId, group]);
+  }, []);
 
   const deleteGroupHandler = async () => {
     try {
@@ -39,9 +39,10 @@ const TodoGroupPage = () => {
         groupId,
         attribute
       );
-      setGroup((currentGroup) =>
-        currentGroup.map((todo) => {
-          return { ...todo, [attribute]: toggledAttribute };
+      setGroup((previousGroup) =>
+        previousGroup.map((todo) => {
+          if (todoId === todo._id) return { ...todo, [attribute]: toggledAttribute };
+          return todo;
         })
       );
     } catch (e) {
