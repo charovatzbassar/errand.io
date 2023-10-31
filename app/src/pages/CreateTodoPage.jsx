@@ -15,6 +15,11 @@ const CreateTodoPage = () => {
         ...(data.deadline && { deadline: data.deadline }),
       };
 
+      const currentDate = new Date();
+      const todoDeadline = new Date(todoData.deadline);
+
+      if (currentDate > todoDeadline) return;
+
       await createTodo(groupId, todoData);
       navigate(`/todos/${groupId}`);
     } catch (e) {

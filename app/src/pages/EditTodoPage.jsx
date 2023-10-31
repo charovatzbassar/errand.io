@@ -33,6 +33,8 @@ const EditTodoPage = () => {
         ...(data.deadline && { deadline: data.deadline }),
       };
 
+      if (todoData.date > updatedTodoData.deadline) return;
+
       await updateTodo(todoId, groupId, updatedTodoData);
       navigate(`/todos/${groupId}/${todoId}`);
     } catch (e) {
