@@ -13,7 +13,7 @@ const TodoGroupPage = () => {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const currentTodos = await getTodoGroup(groupId); // problem
+        const currentTodos = await getTodoGroup(groupId);
         setGroup(currentTodos);
       } catch (e) {
         console.error(e);
@@ -41,7 +41,8 @@ const TodoGroupPage = () => {
       );
       setGroup((previousGroup) =>
         previousGroup.map((todo) => {
-          if (todoId === todo._id) return { ...todo, [attribute]: toggledAttribute };
+          if (todoId === todo._id)
+            return { ...todo, [attribute]: toggledAttribute };
           return todo;
         })
       );
