@@ -7,7 +7,6 @@ const TodoPage = () => {
   const [todo, setTodo] = useState({});
 
   const { groupId, todoId } = useParams();
-  const { urgent, completed } = todo;
 
   const navigate = useNavigate();
 
