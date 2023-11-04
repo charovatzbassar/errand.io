@@ -22,7 +22,7 @@ const TodoPage = () => {
     };
 
     fetchTodo();
-  }, [urgent, completed]);
+  }, []);
 
   const deleteTodoHandler = async () => {
     try {
