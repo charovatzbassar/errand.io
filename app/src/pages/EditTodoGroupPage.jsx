@@ -10,13 +10,13 @@ const EditTodoGroupPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTodoGroupData = async () => {
-      const data = await getTodoGroupData(groupId);
-      setTodoGroupData(data);
-    };
-
     fetchTodoGroupData();
   }, [groupId]);
+
+  const fetchTodoGroupData = async () => {
+    const data = await getTodoGroupData(groupId);
+    setTodoGroupData(data);
+  };
 
   const onSubmit = async (data) => {
     try {

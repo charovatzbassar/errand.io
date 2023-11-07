@@ -9,17 +9,17 @@ const TodoGroupsPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTodoGroups = async () => {
-      try {
-        const currentTodoGroups = await getTodoGroups();
-        setTodoGroups(currentTodoGroups);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
     fetchTodoGroups();
   }, []);
+
+  const fetchTodoGroups = async () => {
+    try {
+      const currentTodoGroups = await getTodoGroups();
+      setTodoGroups(currentTodoGroups);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>

@@ -10,19 +10,19 @@ const EditTodoPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTodoData = async () => {
-      const data = await getTodo(todoId, groupId);
-      const formattedData = {
-        ...data,
-        ...(data.deadline && {
-          deadline: data.deadline.slice(0, 10),
-        }),
-      };
-      setTodoData(formattedData);
-    };
-
     fetchTodoData();
   }, [groupId, todoId]);
+
+  const fetchTodoData = async () => {
+    const data = await getTodo(todoId, groupId);
+    const formattedData = {
+      ...data,
+      ...(data.deadline && {
+        deadline: data.deadline.slice(0, 10),
+      }),
+    };
+    setTodoData(formattedData);
+  };
 
   const onSubmit = async (data) => {
     try {

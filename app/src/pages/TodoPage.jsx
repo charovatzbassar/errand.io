@@ -11,17 +11,17 @@ const TodoPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTodo = async () => {
-      try {
-        const currentTodo = await getTodo(todoId, groupId);
-        setTodo(currentTodo);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
     fetchTodo();
   }, []);
+
+  const fetchTodo = async () => {
+    try {
+      const currentTodo = await getTodo(todoId, groupId);
+      setTodo(currentTodo);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const deleteTodoHandler = async () => {
     try {
