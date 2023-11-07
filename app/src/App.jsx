@@ -6,24 +6,31 @@ import CreateTodoGroupPage from "./pages/CreateTodoGroupPage";
 import EditTodoGroupPage from "./pages/EditTodoGroupPage";
 import CreateTodoPage from "./pages/CreateTodoPage";
 import EditTodoPage from "./pages/EditTodoPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
-    path: "todos",
+    path: "/",
+    errorElement: <ErrorPage />,
     children: [
-      { path: "", element: <TodoGroupsPage /> },
-      { path: "new", element: <CreateTodoGroupPage /> },
       {
-        path: ":groupId",
+        path: "todos",
         children: [
-          { path: "", element: <TodoGroupPage /> },
-          { path: "new", element: <CreateTodoPage /> },
-          { path: "edit", element: <EditTodoGroupPage /> },
+          { path: "", element: <TodoGroupsPage /> },
+          { path: "new", element: <CreateTodoGroupPage /> },
           {
-            path: ":todoId",
+            path: ":groupId",
             children: [
-              { path: "", element: <TodoPage /> },
-              { path: "edit", element: <EditTodoPage /> },
+              { path: "", element: <TodoGroupPage /> },
+              { path: "new", element: <CreateTodoPage /> },
+              { path: "edit", element: <EditTodoGroupPage /> },
+              {
+                path: ":todoId",
+                children: [
+                  { path: "", element: <TodoPage /> },
+                  { path: "edit", element: <EditTodoPage /> },
+                ],
+              },
             ],
           },
         ],

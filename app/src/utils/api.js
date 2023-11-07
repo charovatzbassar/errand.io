@@ -53,7 +53,7 @@ export const getTodoGroups = async () => {
     const res = await axios.get("http://localhost:3000/todos");
     return res.data;
   } catch (e) {
-    console.error(e);
+    return [];
   }
 };
 
