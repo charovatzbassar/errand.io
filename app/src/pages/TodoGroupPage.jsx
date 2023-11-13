@@ -62,7 +62,7 @@ const TodoGroupPage = () => {
         Edit Group
       </button>
       <button onClick={deleteGroupHandler}>Delete Group</button>
-      {group === undefined || group.length == 0 ? "Could not fetch todos" : ""}
+      {group === undefined || group.length == 0 ? "Could not fetch or no todos" : ""}
     </>
   );
 };
