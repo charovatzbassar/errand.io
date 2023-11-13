@@ -36,7 +36,7 @@ router.post(
 
     if (pwIsValid) {
       const token = createJSONToken(username);
-      res.json({ token });
+      res.json({ message: "User logged in", token });
     }
 
     next(new ExpressError("Authentication failed", 500));

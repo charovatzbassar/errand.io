@@ -41,13 +41,11 @@ module.exports.checkAuth = (req, res, next) => {
     return next();
   }
   if (!req.headers.authorization) {
-    console.log("NOT AUTH. AUTH HEADER MISSING.");
     return next(new ExpressError("Not authenticated.", 401));
   }
   const authFragments = req.headers.authorization.split(" ");
 
   if (authFragments.length !== 2) {
-    console.log("NOT AUTH. AUTH HEADER INVALID.");
     return next(new ExpressError("Not authenticated.", 401));
   }
   const authToken = authFragments[1];
@@ -55,7 +53,6 @@ module.exports.checkAuth = (req, res, next) => {
     const validatedToken = validateJSONToken(authToken);
     req.token = validatedToken;
   } catch (error) {
-    console.log("NOT AUTH. TOKEN INVALID.");
     return next(new ExpressError("Not authenticated.", 401));
   }
   next();
