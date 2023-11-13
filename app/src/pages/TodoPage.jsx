@@ -57,6 +57,10 @@ const TodoPage = () => {
         Edit
       </button>
       <button onClick={deleteTodoHandler}>Delete</button>
+      {todo === undefined ||
+      (Object.keys(todo).length === 0 && todo.constructor === Object)
+        ? "Could not fetch todo"
+        : ""}
     </>
   );
 };

@@ -6,8 +6,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const mongoSanitize = require("express-mongo-sanitize");
-const todoRoutes = require("./routes/todoRoutes");
 const ExpressError = require("./utils/ExpressError");
+const todoRoutes = require("./routes/todoRoutes");
 
 const app = express();
 const port = process.env.API_PORT;

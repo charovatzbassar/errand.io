@@ -8,7 +8,7 @@ export const toggleAttribute = async (todoId, groupId, attribute) => {
 
     return res.data[attribute];
   } catch (e) {
-    console.error(e);
+    return { ...e, message: "Could not toggle attribute" };
   }
 };
 
@@ -16,7 +16,7 @@ export const deleteTodo = async (todoId, groupId) => {
   try {
     await axios.delete(`http://localhost:3000/todos/${groupId}/${todoId}`);
   } catch (e) {
-    console.error(e);
+    return { ...e, message: "Could not delete todo" };
   }
 };
 
@@ -27,7 +27,7 @@ export const getTodo = async (todoId, groupId) => {
     );
     return res.data[0];
   } catch (e) {
-    console.error(e);
+    return {};
   }
 };
 
@@ -36,7 +36,7 @@ export const getTodoGroup = async (groupId) => {
     const res = await axios.get(`http://localhost:3000/todos/${groupId}`);
     return res.data;
   } catch (e) {
-    console.error(e);
+    return [];
   }
 };
 
@@ -44,7 +44,7 @@ export const deleteTodoGroup = async (groupId) => {
   try {
     await axios.delete(`http://localhost:3000/todos/${groupId}`);
   } catch (e) {
-    console.error(e);
+    return { ...e, message: "Could not delete todo group" };
   }
 };
 
@@ -53,7 +53,7 @@ export const getTodoGroups = async () => {
     const res = await axios.get("http://localhost:3000/todos");
     return res.data;
   } catch (e) {
-    console.error(e);
+    return [];
   }
 };
 
@@ -61,7 +61,7 @@ export const createTodoGroup = async (todoGroup) => {
   try {
     await axios.post("http://localhost:3000/todos", todoGroup);
   } catch (e) {
-    console.error(e);
+    return { ...e, message: "Could not create todo group" };
   }
 };
 
@@ -69,7 +69,7 @@ export const updateTodoGroup = async (groupId, newTodoGroup) => {
   try {
     await axios.put(`http://localhost:3000/todos/${groupId}`, newTodoGroup);
   } catch (e) {
-    console.error(e);
+    return { ...e, message: "Could not edit todo group" };
   }
 };
 
@@ -78,7 +78,7 @@ export const getTodoGroupData = async (groupId) => {
     const res = await axios.get(`http://localhost:3000/todos/${groupId}/data`);
     return res.data;
   } catch (e) {
-    console.error(e);
+    return {};
   }
 };
 
@@ -86,7 +86,7 @@ export const createTodo = async (groupId, todo) => {
   try {
     await axios.post(`http://localhost:3000/todos/${groupId}`, todo);
   } catch (e) {
-    console.error(e);
+    return { ...e, message: "Could not create todo" };
   }
 };
 
@@ -97,6 +97,6 @@ export const updateTodo = async (todoId, groupId, newTodo) => {
       newTodo
     );
   } catch (e) {
-    console.error(e);
+    return { ...e, message: "Could not edit todo" };
   }
 };
