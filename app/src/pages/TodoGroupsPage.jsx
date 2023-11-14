@@ -26,7 +26,7 @@ const TodoGroupsPage = () => {
       <TodoGroups todoGroups={todoGroups} />
       <button onClick={() => navigate("/todos/new")}>New Group</button>
       {todoGroups === undefined || todoGroups.length == 0
-        ? "Could not fetch or no todo groups"
+        ? "No todo groups"
         : ""}
     </>
   );

@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const mongoSanitize = require("express-mongo-sanitize");
 const ExpressError = require("./utils/ExpressError");
 const todoRoutes = require("./routes/todoRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 const port = process.env.API_PORT;
@@ -35,6 +36,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize());
 
+app.use("/auth", authRoutes);
 app.use("/todos", todoRoutes);
 
 app.all("*", (req, res, next) => {
