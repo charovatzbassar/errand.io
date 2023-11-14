@@ -3,7 +3,7 @@ import AuthForm from "../components/AuthForm";
 
 const RegisterPage = () => {
   const onSubmit = (data) => {
-    console.log(data);
+    if (data.password === data.repeatPassword) console.log(data);
   };
 
   return <AuthForm action="REGISTER" onSubmit={onSubmit} />;
