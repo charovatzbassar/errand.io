@@ -11,12 +11,19 @@ const router = express.Router();
 router.post(
   "/register",
   validateUser,
-  catchAsync(async (req, res) => {
+  catchAsync(async (req, res, next) => {
     const passwordHash = await hash(req.body.password, 12);
     const newUser = new User({
       ...req.body,
       password: passwordHash,
     });
+
+    const user = await User.findOne({ username: newUser.username });
+
+    if (user) {
+      next(new ExpressError("User already registered", 401));
+    }
+
     await newUser.save();
     const authToken = createJSONToken(newUser.username);
     res
@@ -32,6 +39,10 @@ router.post(
 
     const user = await User.findOne({ username });
 
+    if (!user) {
+      next(new ExpressError("Invalid credentials", 500));
+    }
+
     const pwIsValid = await isValidPassword(password, user.password);
 
     if (pwIsValid) {
@@ -39,7 +50,7 @@ router.post(
       res.json({ message: "User logged in", token });
     }
 
-    next(new ExpressError("Authentication failed", 500));
+    next(new ExpressError("Invalid credentials", 500));
   })
 );
 
