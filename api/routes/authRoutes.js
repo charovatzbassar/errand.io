@@ -18,17 +18,15 @@ router.post(
       password: passwordHash,
     });
 
-    const user = await User.findOne({ username: newUser.username });
+    const userInDB = await User.findOne({ username: newUser.username });
 
-    if (user) {
+    if (userInDB) {
       next(new ExpressError("User already registered", 401));
     }
 
     await newUser.save();
-    const authToken = createJSONToken(newUser.username);
-    res
-      .status(201)
-      .json({ message: "User registered.", user: newUser, token: authToken });
+    const token = createJSONToken(newUser.username);
+    res.status(201).json({ message: "User registered.", user: newUser, token });
   })
 );
 
@@ -48,6 +46,7 @@ router.post(
     if (pwIsValid) {
       const token = createJSONToken(username);
       res.json({ message: "User logged in", token });
+      return;
     }
 
     next(new ExpressError("Invalid credentials", 500));
