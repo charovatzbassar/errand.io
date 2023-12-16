@@ -3,8 +3,8 @@ const {
   todoGroupSchema,
   userSchema,
 } = require("./validationSchemas");
-const { validateJSONToken } = require("./utils/auth");
 const ExpressError = require("./utils/ExpressError.js");
+const { verify } = require("jsonwebtoken");
 
 module.exports.validateTodoGroup = async (req, res, next) => {
   const { error } = todoGroupSchema.validate(req.body);
@@ -50,7 +50,17 @@ module.exports.checkAuth = (req, res, next) => {
   }
   const authToken = authFragments[1];
   try {
-    const validatedToken = validateJSONToken(authToken);
+    const validatedToken = verify(
+      authToken,
+      process.env.AUTH_SECRET,
+      (err, user) => {
+        if (err) {
+          return res.status(403).json({ message: "Forbidden" });
+        }
+
+        req.user = user;
+      }
+    );
     req.token = validatedToken;
   } catch (error) {
     return next(new ExpressError("Not authenticated.", 401));

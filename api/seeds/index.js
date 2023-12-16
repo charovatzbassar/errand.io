@@ -151,13 +151,12 @@ const mockTodos = [
     todoGroup: "653ce51544e0b7a53d296198",
   },
 ];
+Todo.insertMany(mockTodos);
 
 // TodoGroup.insertMany([
-//   { title: "Group 1" },
-//   { title: "Group 2" },
-//   { title: "Group 3" },
-//   { title: "Group 4" },
-//   { title: "Group 5" },
+//   { title: "Group 1", user: "657e066979b136465b6774c0" },
+//   { title: "Group 2", user: "657e066979b136465b6774c0" },
+//   { title: "Group 3", user: "657e12b14eedb35143911ad8" },
+//   { title: "Group 4", user: "657e12b14eedb35143911ad8" },
+//   { title: "Group 5", user: "657e12b14eedb35143911ad8" },
 // ]);
-
-Todo.insertMany(mockTodos);

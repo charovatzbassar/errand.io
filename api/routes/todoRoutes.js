@@ -10,8 +10,9 @@ const router = express.Router();
 router
   .route("/")
   .get(
+    checkAuth,
     catchAsync(async (req, res) => {
-      const todoGroups = await TodoGroup.find({});
+      const todoGroups = await TodoGroup.findByUser(req.user.username);
       res.json(todoGroups);
     })
   )
