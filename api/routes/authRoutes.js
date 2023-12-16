@@ -43,13 +43,12 @@ router.post(
 
     const pwIsValid = await isValidPassword(password, user.password);
 
-    if (pwIsValid) {
-      const token = createJSONToken(username);
-      res.json({ message: "User logged in", token });
-      return;
+    if (!pwIsValid) {
+      next(new ExpressError("Invalid credentials", 500));
     }
 
-    next(new ExpressError("Invalid credentials", 500));
+    const token = createJSONToken(username);
+    res.json({ message: "User logged in", token });
   })
 );
 

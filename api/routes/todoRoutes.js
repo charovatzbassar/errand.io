@@ -2,7 +2,7 @@ const express = require("express");
 const TodoGroup = require("../models/TodoGroup");
 const Todo = require("../models/Todo");
 const { catchAsync } = require("../utils/catchAsync");
-const { validateTodo, validateTodoGroup } = require("../middleware");
+const { validateTodo, validateTodoGroup, checkAuth } = require("../middleware");
 const ExpressError = require("../utils/ExpressError");
 
 const router = express.Router();
