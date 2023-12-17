@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
+const TodoGroup = require("./TodoGroup");
 
 const todoSchema = new Schema({
   title: {
@@ -43,6 +44,12 @@ todoSchema.statics.findOneAndToggle = async function (
   foundTodo[toggleField] = !foundTodo[toggleField];
   await foundTodo.save();
   return foundTodo;
+};
+
+todoSchema.statics.findByUser = async function (groupId, username) {
+  const todoGroup = await TodoGroup.findOneByUser(groupId, username);
+  const todos = await this.find({ todoGroup: todoGroup._id });
+  return todos;
 };
 
 module.exports = model("Todo", todoSchema);

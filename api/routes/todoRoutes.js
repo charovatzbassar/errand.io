@@ -2,7 +2,11 @@ const express = require("express");
 const TodoGroup = require("../models/TodoGroup");
 const Todo = require("../models/Todo");
 const { catchAsync } = require("../utils/catchAsync");
-const { validateTodo, validateTodoGroup, checkAuth } = require("../middleware");
+const {
+  validateTodo,
+  validateTodoGroup,
+} = require("../utils/validationMiddleware");
+const checkAuth = require("../utils/checkAuth");
 const ExpressError = require("../utils/ExpressError");
 
 const router = express.Router();
@@ -48,9 +52,10 @@ router
     })
   )
   .get(
+    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
-      const todos = await Todo.find({ todoGroup: groupId });
+      const todos = await Todo.findByUser(groupId, req.user.username);
       res.json(todos);
     })
   )

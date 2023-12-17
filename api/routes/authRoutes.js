@@ -1,5 +1,5 @@
 const express = require("express");
-const { validateUser } = require("../middleware");
+const { validateUser } = require("../utils/validationMiddleware");
 const { catchAsync } = require("../utils/catchAsync");
 const User = require("../models/User");
 const { hash, compare } = require("bcryptjs");
