@@ -99,19 +99,22 @@ router
     })
   )
   .delete(
+    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
-      const todo = await Todo.findOneAndDelete({
-        _id: todoId,
-        todoGroup: groupId,
-      });
+      const todo = await Todo.findOneByUserAndDelete(
+        groupId,
+        todoId,
+        req.user.username
+      );
       res.json(todo);
     })
   )
   .get(
+    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
-      const todo = await Todo.find({ _id: todoId, todoGroup: groupId });
+      const todo = await Todo.findOneByUser(groupId, todoId, req.user.username);
       res.json(todo);
     })
   );
