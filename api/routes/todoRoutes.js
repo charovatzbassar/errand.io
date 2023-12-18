@@ -75,10 +75,16 @@ router
     })
   )
   .delete(
+    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
-      await Todo.deleteMany({ todoGroup: groupId });
-      const todoGroup = await TodoGroup.findByIdAndDelete(groupId);
+      const user = await User.findOne({ username: req.user.username });
+      const todoGroup = await TodoGroup.findOne({
+        _id: groupId,
+        user: user._id,
+      });
+      await Todo.deleteMany({ todoGroup: todoGroup._id });
+      await todoGroup.deleteOne();
       res.json(todoGroup);
     })
   );
@@ -124,11 +130,17 @@ router
     })
   )
   .delete(
+    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
+      const user = await User.findOne({ username: req.user.username });
+      const todoGroup = await TodoGroup.findOne({
+        _id: groupId,
+        user: user._id,
+      });
       const todo = await Todo.findOneAndDelete({
         _id: todoId,
-        todoGroup: groupId,
+        todoGroup: todoGroup._id,
       });
       res.json(todo);
     })
