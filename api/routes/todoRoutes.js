@@ -23,9 +23,14 @@ router
     })
   )
   .post(
+    checkAuth,
     validateTodoGroup,
     catchAsync(async (req, res) => {
-      const newTodoGroup = new TodoGroup({ title: req.body.title });
+      const user = await User.findOne({ username: req.user.username });
+      const newTodoGroup = new TodoGroup({
+        title: req.body.title,
+        user: user._id,
+      });
       await newTodoGroup.save();
       res.json(newTodoGroup);
     })
@@ -47,14 +52,20 @@ router
     })
   )
   .post(
+    checkAuth,
     validateTodo,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
+      const user = await User.findOne({ username: req.user.username });
+      const todoGroup = await TodoGroup.findOne({
+        _id: groupId,
+        user: user._id,
+      });
       const newTodo = new Todo({
         ...req.body,
         date: new Date(),
         completed: false,
-        todoGroup: groupId,
+        todoGroup: todoGroup._id,
       });
 
       await newTodo.save();
