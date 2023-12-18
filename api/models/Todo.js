@@ -46,25 +46,5 @@ todoSchema.statics.findOneAndToggle = async function (
   return foundTodo;
 };
 
-todoSchema.statics.findByUser = async function (groupId, username) {
-  const todoGroup = await TodoGroup.findOneByUser(groupId, username);
-  const todos = await this.find({ todoGroup: todoGroup._id });
-  return todos;
-};
-
-todoSchema.statics.findOneByUser = async function (groupId, todoId, username) {
-  const todoGroup = await TodoGroup.findOneByUser(groupId, username);
-  const todo = await this.findOne({ _id: todoId, todoGroup: todoGroup._id });
-  return todo;
-};
-
-todoSchema.statics.findOneByUserAndDelete = async function (
-  groupId,
-  todoId,
-  username
-) {
-  const todoGroup = await TodoGroup.findOneByUser(groupId, username);
-  await this.findOneAndDelete({ _id: todoId, todoGroup: todoGroup._id });
-};
 
 module.exports = model("Todo", todoSchema);

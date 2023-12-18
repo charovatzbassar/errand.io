@@ -1,6 +1,7 @@
 const express = require("express");
 const TodoGroup = require("../models/TodoGroup");
 const Todo = require("../models/Todo");
+const User = require("../models/User");
 const { catchAsync } = require("../utils/catchAsync");
 const {
   validateTodo,
@@ -16,7 +17,8 @@ router
   .get(
     checkAuth,
     catchAsync(async (req, res) => {
-      const todoGroups = await TodoGroup.findByUser(req.user.username);
+      const user = await User.findOne({ username: req.user.username });
+      const todoGroups = await TodoGroup.find({ user: user._id });
       res.json(todoGroups);
     })
   )
@@ -31,6 +33,35 @@ router
 
 router
   .route("/:groupId")
+  .get(
+    checkAuth,
+    catchAsync(async (req, res) => {
+      const { groupId } = req.params;
+      const user = await User.findOne({ username: req.user.username });
+      const todoGroup = await TodoGroup.findOne({
+        _id: groupId,
+        user: user._id,
+      });
+      const todos = await Todo.find({ todoGroup: todoGroup._id });
+      res.json(todos);
+    })
+  )
+  .post(
+    validateTodo,
+    catchAsync(async (req, res) => {
+      const { groupId } = req.params;
+      const newTodo = new Todo({
+        ...req.body,
+        date: new Date(),
+        completed: false,
+        todoGroup: groupId,
+      });
+
+      await newTodo.save();
+
+      res.json(newTodo);
+    })
+  )
   .put(
     validateTodoGroup,
     catchAsync(async (req, res) => {
@@ -50,30 +81,6 @@ router
       const todoGroup = await TodoGroup.findByIdAndDelete(groupId);
       res.json(todoGroup);
     })
-  )
-  .get(
-    checkAuth,
-    catchAsync(async (req, res) => {
-      const { groupId } = req.params;
-      const todos = await Todo.findByUser(groupId, req.user.username);
-      res.json(todos);
-    })
-  )
-  .post(
-    validateTodo,
-    catchAsync(async (req, res) => {
-      const { groupId } = req.params;
-      const newTodo = new Todo({
-        ...req.body,
-        date: new Date(),
-        completed: false,
-        todoGroup: groupId,
-      });
-
-      await newTodo.save();
-
-      res.json(newTodo);
-    })
   );
 
 router.get(
@@ -87,6 +94,14 @@ router.get(
 
 router
   .route("/:groupId/:todoId")
+  .get(
+    checkAuth,
+    catchAsync(async (req, res) => {
+      const { groupId, todoId } = req.params;
+      const todo = await Todo.findOneByUser(groupId, todoId, req.user.username);
+      res.json(todo);
+    })
+  )
   .put(
     validateTodo,
     catchAsync(async (req, res) => {
@@ -99,22 +114,12 @@ router
     })
   )
   .delete(
-    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
-      const todo = await Todo.findOneByUserAndDelete(
-        groupId,
-        todoId,
-        req.user.username
-      );
-      res.json(todo);
-    })
-  )
-  .get(
-    checkAuth,
-    catchAsync(async (req, res) => {
-      const { groupId, todoId } = req.params;
-      const todo = await Todo.findOneByUser(groupId, todoId, req.user.username);
+      const todo = await Todo.findOneAndDelete({
+        _id: todoId,
+        todoGroup: groupId,
+      });
       res.json(todo);
     })
   );
