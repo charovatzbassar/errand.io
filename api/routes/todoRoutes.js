@@ -74,13 +74,19 @@ router
     })
   )
   .put(
+    checkAuth,
     validateTodoGroup,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
 
-      const todoGroup = await TodoGroup.findByIdAndUpdate(groupId, {
-        title: req.body.title,
-      });
+      const user = await User.findOne({ username: req.user.username });
+
+      const todoGroup = await TodoGroup.findOneAndUpdate(
+        { _id: groupId, user: user._id },
+        {
+          title: req.body.title,
+        }
+      );
 
       res.json(todoGroup);
     })
@@ -130,11 +136,18 @@ router
     })
   )
   .put(
+    checkAuth,
     validateTodo,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
+      const user = await User.findOne({ username: req.user.username });
+      const todoGroup = await TodoGroup.findOne({
+        _id: groupId,
+        user: user._id,
+      });
+
       const todo = await Todo.findOneAndUpdate(
-        { _id: todoId, todoGroup: groupId },
+        { _id: todoId, todoGroup: todoGroup._id },
         { ...req.body, date: new Date() }
       );
       res.json(todo);
@@ -159,14 +172,20 @@ router
 
 router.put(
   "/:groupId/:todoId/:attribute",
+  checkAuth,
   catchAsync(async (req, res) => {
     const { groupId, todoId, attribute } = req.params;
+    const user = await User.findOne({ username: req.user.username });
+    const todoGroup = await TodoGroup.findOne({
+      _id: groupId,
+      user: user._id,
+    });
     const attributes = ["completed", "urgent"];
     if (!attributes.includes(attribute)) {
       throw new ExpressError("Invalid attribute", 400);
     }
 
-    const todo = await Todo.findOneAndToggle(groupId, todoId, attribute);
+    const todo = await Todo.findOneAndToggle(todoGroup._id, todoId, attribute);
     res.json(todo);
   })
 );
