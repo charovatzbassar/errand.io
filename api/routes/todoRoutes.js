@@ -85,9 +85,11 @@ router
 
 router.get(
   "/:groupId/data",
+  checkAuth,
   catchAsync(async (req, res) => {
     const { groupId } = req.params;
-    const todoGroup = await TodoGroup.findById(groupId);
+    const user = await User.findOne({ username: req.user.username });
+    const todoGroup = await TodoGroup.findOne({ _id: groupId, user: user._id });
     res.json(todoGroup);
   })
 );
@@ -98,7 +100,15 @@ router
     checkAuth,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
-      const todo = await Todo.findOneByUser(groupId, todoId, req.user.username);
+      const user = await User.findOne({ username: req.user.username });
+      const todoGroup = await TodoGroup.findOne({
+        _id: groupId,
+        user: user._id,
+      });
+      const todo = await Todo.findOne({
+        _id: todoId,
+        todoGroup: todoGroup._id,
+      });
       res.json(todo);
     })
   )
