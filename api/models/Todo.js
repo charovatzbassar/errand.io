@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
+const TodoGroup = require("./TodoGroup");
 
 const todoSchema = new Schema({
   title: {
@@ -44,5 +45,6 @@ todoSchema.statics.findOneAndToggle = async function (
   await foundTodo.save();
   return foundTodo;
 };
+
 
 module.exports = model("Todo", todoSchema);

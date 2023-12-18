@@ -2,9 +2,8 @@ const {
   todoSchema,
   todoGroupSchema,
   userSchema,
-} = require("./validationSchemas");
-const { validateJSONToken } = require("./utils/auth");
-const ExpressError = require("./utils/ExpressError.js");
+} = require("./validationSchemas.js");
+const ExpressError = require("./ExpressError.js");
 
 module.exports.validateTodoGroup = async (req, res, next) => {
   const { error } = todoGroupSchema.validate(req.body);
@@ -34,26 +33,4 @@ module.exports.validateUser = async (req, res, next) => {
   } else {
     next();
   }
-};
-
-module.exports.checkAuth = (req, res, next) => {
-  if (req.method === "OPTIONS") {
-    return next();
-  }
-  if (!req.headers.authorization) {
-    return next(new ExpressError("Not authenticated.", 401));
-  }
-  const authFragments = req.headers.authorization.split(" ");
-
-  if (authFragments.length !== 2) {
-    return next(new ExpressError("Not authenticated.", 401));
-  }
-  const authToken = authFragments[1];
-  try {
-    const validatedToken = validateJSONToken(authToken);
-    req.token = validatedToken;
-  } catch (error) {
-    return next(new ExpressError("Not authenticated.", 401));
-  }
-  next();
 };

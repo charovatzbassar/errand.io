@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
+const User = require("./User");
 
 const todoGroupSchema = new Schema({
   title: {
@@ -12,5 +13,6 @@ const todoGroupSchema = new Schema({
     required: true,
   },
 });
+
 
 module.exports = model("TodoGroup", todoGroupSchema);
