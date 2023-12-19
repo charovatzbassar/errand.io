@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import TodoGroupPage from "./pages/TodoGroupPage";
 import TodoPage from "./pages/TodoPage";
 import TodoGroupsPage from "./pages/TodoGroupsPage";
@@ -28,7 +32,7 @@ const router = createBrowserRouter([
             element: localStorage.getItem("token") ? (
               <TodoGroupsPage />
             ) : (
-              <LoginPage />
+              <Navigate to="/auth/login" />
             ),
           },
           {
@@ -36,7 +40,7 @@ const router = createBrowserRouter([
             element: localStorage.getItem("token") ? (
               <CreateTodoGroupPage />
             ) : (
-              <LoginPage />
+              <Navigate to="/auth/login" />
             ),
           },
           {
@@ -47,7 +51,7 @@ const router = createBrowserRouter([
                 element: localStorage.getItem("token") ? (
                   <TodoGroupPage />
                 ) : (
-                  <LoginPage />
+                  <Navigate to="/auth/login" />
                 ),
               },
               {
@@ -55,7 +59,7 @@ const router = createBrowserRouter([
                 element: localStorage.getItem("token") ? (
                   <CreateTodoPage />
                 ) : (
-                  <LoginPage />
+                  <Navigate to="/auth/login" />
                 ),
               },
               {
@@ -63,7 +67,7 @@ const router = createBrowserRouter([
                 element: localStorage.getItem("token") ? (
                   <EditTodoGroupPage />
                 ) : (
-                  <LoginPage />
+                  <Navigate to="/auth/login" />
                 ),
               },
               {
@@ -74,7 +78,7 @@ const router = createBrowserRouter([
                     element: localStorage.getItem("token") ? (
                       <TodoPage />
                     ) : (
-                      <LoginPage />
+                      <Navigate to="/auth/login" />
                     ),
                   },
                   {
@@ -82,7 +86,7 @@ const router = createBrowserRouter([
                     element: localStorage.getItem("token") ? (
                       <EditTodoPage />
                     ) : (
-                      <LoginPage />
+                      <Navigate to="/auth/login" />
                     ),
                   },
                 ],
