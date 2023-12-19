@@ -21,13 +21,9 @@ const TodoGroupsPage = () => {
     }
   };
 
-  const logoutHandler = () => {
-    logout();
-  };
-
   return (
     <>
-      <button onClick={logoutHandler}>Log Out</button>
+      <button onClick={logout}>Log Out</button>
       <TodoGroups todoGroups={todoGroups} />
       <button onClick={() => navigate("/todos/new")}>New Group</button>
       {todoGroups === undefined || todoGroups.length == 0
