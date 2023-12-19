@@ -18,6 +18,7 @@ export const register = async (userData) => {
   expiration.setHours(expiration.getHours() + 1);
   localStorage.setItem("expiration", expiration.toISOString());
   window.location.href = "/todos";
+  return res.data.token;
 };
 
 export const login = async (userData) => {
@@ -37,6 +38,7 @@ export const login = async (userData) => {
   expiration.setHours(expiration.getHours() + 1);
   localStorage.setItem("expiration", expiration.toISOString());
   window.location.href = "/todos";
+  return res.data.token;
 };
 
 export const logout = async () => {

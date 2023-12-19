@@ -23,19 +23,68 @@ const router = createBrowserRouter([
       {
         path: "todos",
         children: [
-          { path: "", element: <TodoGroupsPage /> },
-          { path: "new", element: <CreateTodoGroupPage /> },
+          {
+            path: "",
+            element: localStorage.getItem("token") ? (
+              <TodoGroupsPage />
+            ) : (
+              <LoginPage />
+            ),
+          },
+          {
+            path: "new",
+            element: localStorage.getItem("token") ? (
+              <CreateTodoGroupPage />
+            ) : (
+              <LoginPage />
+            ),
+          },
           {
             path: ":groupId",
             children: [
-              { path: "", element: <TodoGroupPage /> },
-              { path: "new", element: <CreateTodoPage /> },
-              { path: "edit", element: <EditTodoGroupPage /> },
+              {
+                path: "",
+                element: localStorage.getItem("token") ? (
+                  <TodoGroupPage />
+                ) : (
+                  <LoginPage />
+                ),
+              },
+              {
+                path: "new",
+                element: localStorage.getItem("token") ? (
+                  <CreateTodoPage />
+                ) : (
+                  <LoginPage />
+                ),
+              },
+              {
+                path: "edit",
+                element: localStorage.getItem("token") ? (
+                  <EditTodoGroupPage />
+                ) : (
+                  <LoginPage />
+                ),
+              },
               {
                 path: ":todoId",
                 children: [
-                  { path: "", element: <TodoPage /> },
-                  { path: "edit", element: <EditTodoPage /> },
+                  {
+                    path: "",
+                    element: localStorage.getItem("token") ? (
+                      <TodoPage />
+                    ) : (
+                      <LoginPage />
+                    ),
+                  },
+                  {
+                    path: "edit",
+                    element: localStorage.getItem("token") ? (
+                      <EditTodoPage />
+                    ) : (
+                      <LoginPage />
+                    ),
+                  },
                 ],
               },
             ],

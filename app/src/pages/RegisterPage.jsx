@@ -6,7 +6,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     if (data.password === data.repeatPassword) {
-      await register(data);
+      const token = await register(data);
       return navigate("/todos");
     }
   };

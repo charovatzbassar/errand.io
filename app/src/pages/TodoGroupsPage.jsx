@@ -6,7 +6,6 @@ import { logout } from "../utils/auth";
 
 const TodoGroupsPage = () => {
   const [todoGroups, setTodoGroups] = useState([]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,9 +21,13 @@ const TodoGroupsPage = () => {
     }
   };
 
+  const logoutHandler = () => {
+    logout();
+  };
+
   return (
     <>
-      <button onClick={logout}>Log Out</button>
+      <button onClick={logoutHandler}>Log Out</button>
       <TodoGroups todoGroups={todoGroups} />
       <button onClick={() => navigate("/todos/new")}>New Group</button>
       {todoGroups === undefined || todoGroups.length == 0
