@@ -9,7 +9,7 @@
         border-radius: 0;
     }
     100%{
-        transform: translateY(-1000px) rotate(720deg);
+        transform: translateY(-500px) rotate(200deg);
         opacity: 0;
         border-radius: 50%;
     }
