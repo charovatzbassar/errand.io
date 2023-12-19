@@ -3,14 +3,13 @@ import axios from "axios";
 export const toggleAttribute = async (todoId, groupId, attribute) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/todos/${groupId}/${todoId}/${attribute}`,
+      `http://localhost:3000/todos/${groupId}/${todoId}/${attribute}`, {},
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       }
     );
-
     return res.data[attribute];
   } catch (e) {
     return { ...e, message: "Could not toggle attribute" };
@@ -39,7 +38,7 @@ export const getTodo = async (todoId, groupId) => {
         },
       }
     );
-    return res.data[0];
+    return res.data;
   } catch (e) {
     return {};
   }

@@ -184,7 +184,7 @@ router.put(
     if (!attributes.includes(attribute)) {
       throw new ExpressError("Invalid attribute", 400);
     }
-
+  
     const todo = await Todo.findOneAndToggle(todoGroup._id, todoId, attribute);
     res.json(todo);
   })
