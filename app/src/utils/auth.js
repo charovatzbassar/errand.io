@@ -1,5 +1,4 @@
 import axios from "axios";
-import { redirect } from "react-router-dom";
 
 export const register = async (userData) => {
   const res = await axios.post("http://localhost:3000/auth/register", {
@@ -18,17 +17,41 @@ export const register = async (userData) => {
   const expiration = new Date();
   expiration.setHours(expiration.getHours() + 1);
   localStorage.setItem("expiration", expiration.toISOString());
+  window.location.href = "/todos";
+  return res.data.token;
 };
 
 export const login = async (userData) => {
-  console.log(userData);
+  const res = await axios.post("http://localhost:3000/auth/login", {
+    username: userData.username,
+    password: userData.password,
+  });
+
+  if (res.status === 500) {
+    console.log("Invalid credentials");
+    return;
+  }
+
+  localStorage.setItem("token", res.data.token);
+
+  const expiration = new Date();
+  expiration.setHours(expiration.getHours() + 1);
+  localStorage.setItem("expiration", expiration.toISOString());
+  window.location.href = "/todos";
+  return res.data.token;
+};
+
+export const logout = async () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("expiration");
+  window.location.href = "/";
 };
 
 export function checkAuth() {
   const token = getAuthToken();
 
   if (!token) {
-    return redirect("/auth/login");
+    window.location.href = "/auth/login";
   }
 
   return null;

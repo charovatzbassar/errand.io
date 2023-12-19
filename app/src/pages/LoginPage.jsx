@@ -4,7 +4,7 @@ import { login } from "../utils/auth";
 
 const LoginPage = () => {
   const onSubmit = async (data) => {
-    await login(data);
+    const token = await login(data);
   };
 
   return <AuthForm action="LOGIN" onSubmit={onSubmit} />;

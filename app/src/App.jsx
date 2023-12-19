@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import TodoGroupPage from "./pages/TodoGroupPage";
 import TodoPage from "./pages/TodoPage";
 import TodoGroupsPage from "./pages/TodoGroupsPage";
@@ -9,6 +13,7 @@ import EditTodoPage from "./pages/EditTodoPage";
 import ErrorPage from "./pages/ErrorPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
 
 const router = createBrowserRouter([
   {
@@ -16,21 +21,74 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: "",
+        element: <HomePage />,
+      },
+      {
         path: "todos",
         children: [
-          { path: "", element: <TodoGroupsPage /> },
-          { path: "new", element: <CreateTodoGroupPage /> },
+          {
+            path: "",
+            element: localStorage.getItem("token") ? (
+              <TodoGroupsPage />
+            ) : (
+              <Navigate to="/auth/login" />
+            ),
+          },
+          {
+            path: "new",
+            element: localStorage.getItem("token") ? (
+              <CreateTodoGroupPage />
+            ) : (
+              <Navigate to="/auth/login" />
+            ),
+          },
           {
             path: ":groupId",
             children: [
-              { path: "", element: <TodoGroupPage /> },
-              { path: "new", element: <CreateTodoPage /> },
-              { path: "edit", element: <EditTodoGroupPage /> },
+              {
+                path: "",
+                element: localStorage.getItem("token") ? (
+                  <TodoGroupPage />
+                ) : (
+                  <Navigate to="/auth/login" />
+                ),
+              },
+              {
+                path: "new",
+                element: localStorage.getItem("token") ? (
+                  <CreateTodoPage />
+                ) : (
+                  <Navigate to="/auth/login" />
+                ),
+              },
+              {
+                path: "edit",
+                element: localStorage.getItem("token") ? (
+                  <EditTodoGroupPage />
+                ) : (
+                  <Navigate to="/auth/login" />
+                ),
+              },
               {
                 path: ":todoId",
                 children: [
-                  { path: "", element: <TodoPage /> },
-                  { path: "edit", element: <EditTodoPage /> },
+                  {
+                    path: "",
+                    element: localStorage.getItem("token") ? (
+                      <TodoPage />
+                    ) : (
+                      <Navigate to="/auth/login" />
+                    ),
+                  },
+                  {
+                    path: "edit",
+                    element: localStorage.getItem("token") ? (
+                      <EditTodoPage />
+                    ) : (
+                      <Navigate to="/auth/login" />
+                    ),
+                  },
                 ],
               },
             ],
