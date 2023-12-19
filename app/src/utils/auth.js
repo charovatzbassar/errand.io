@@ -18,10 +18,32 @@ export const register = async (userData) => {
   const expiration = new Date();
   expiration.setHours(expiration.getHours() + 1);
   localStorage.setItem("expiration", expiration.toISOString());
+  return redirect("/todos");
 };
 
 export const login = async (userData) => {
-  console.log(userData);
+  const res = await axios.post("http://localhost:3000/auth/login", {
+    username: userData.username,
+    password: userData.password,
+  });
+
+  if (res.status === 500) {
+    console.log("Invalid credentials");
+    return;
+  }
+
+  localStorage.setItem("token", res.data.token);
+
+  const expiration = new Date();
+  expiration.setHours(expiration.getHours() + 1);
+  localStorage.setItem("expiration", expiration.toISOString());
+  return redirect("/todos");
+};
+
+export const logout = async () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("expiration");
+  return redirect("/");
 };
 
 export function checkAuth() {
