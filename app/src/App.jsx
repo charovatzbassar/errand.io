@@ -9,12 +9,17 @@ import EditTodoPage from "./pages/EditTodoPage";
 import ErrorPage from "./pages/ErrorPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
       {
         path: "todos",
         children: [
