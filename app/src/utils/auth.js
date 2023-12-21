@@ -81,7 +81,3 @@ export function getTokenDuration() {
   const duration = expirationDate.getTime() - now.getTime();
   return duration;
 }
-
-export function tokenLoader() {
-  return getAuthToken();
-}

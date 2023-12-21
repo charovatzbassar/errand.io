@@ -1,22 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Box, Typography, Stack } from "@mui/material";
 import { logout } from "../utils/auth";
+import Background from "../components/Background";
 
 const HomePage = () => {
   const navigate = useNavigate();
   return (
     <>
-      <ul className="background h-screen">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>{" "}
+      <Background>
         <div className="flex justify-end p-5 fixed w-screen">
           <Stack spacing={2} direction="row">
             {!localStorage.getItem("token") ? (
@@ -62,10 +53,9 @@ const HomePage = () => {
               borderRadius: "1em",
             }}
           >
-            <Typography sx={{ textAlign: "center" }} variant="h4">
+            <h5 className="text-lg text-center sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
               Welcome to Errand.io!
-            </Typography>
-
+            </h5>
             <Button
               variant="text"
               sx={{ color: "#3e47ff", fontWeight: "bold" }}
@@ -75,7 +65,7 @@ const HomePage = () => {
             </Button>
           </Box>
         </div>
-      </ul>
+      </Background>
     </>
   );
 };
