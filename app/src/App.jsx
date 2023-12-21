@@ -14,7 +14,6 @@ import ErrorPage from "./pages/ErrorPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-import MUIAuthForm from "./components/AuthForm";
 
 const router = createBrowserRouter([
   {
@@ -108,15 +107,6 @@ const router = createBrowserRouter([
             element: <LoginPage />,
           },
         ],
-      },
-      {
-        path: "/test",
-        element: (
-          <MUIAuthForm
-            action="REGISTER"
-            onSubmit={(data) => console.log(data)}
-          />
-        ),
       },
     ],
   },
