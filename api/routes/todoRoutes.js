@@ -12,10 +12,11 @@ const ExpressError = require("../utils/ExpressError");
 
 const router = express.Router();
 
+router.use(checkAuth);
+
 router
   .route("/")
   .get(
-    checkAuth,
     catchAsync(async (req, res) => {
       const user = await User.findOne({ username: req.user.username });
       const todoGroups = await TodoGroup.find({ user: user._id });
@@ -23,7 +24,6 @@ router
     })
   )
   .post(
-    checkAuth,
     validateTodoGroup,
     catchAsync(async (req, res) => {
       const user = await User.findOne({ username: req.user.username });
@@ -39,7 +39,6 @@ router
 router
   .route("/:groupId")
   .get(
-    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
       const user = await User.findOne({ username: req.user.username });
@@ -52,7 +51,6 @@ router
     })
   )
   .post(
-    checkAuth,
     validateTodo,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
@@ -74,7 +72,6 @@ router
     })
   )
   .put(
-    checkAuth,
     validateTodoGroup,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
@@ -92,7 +89,6 @@ router
     })
   )
   .delete(
-    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId } = req.params;
       const user = await User.findOne({ username: req.user.username });
@@ -108,7 +104,6 @@ router
 
 router.get(
   "/:groupId/data",
-  checkAuth,
   catchAsync(async (req, res) => {
     const { groupId } = req.params;
     const user = await User.findOne({ username: req.user.username });
@@ -120,7 +115,6 @@ router.get(
 router
   .route("/:groupId/:todoId")
   .get(
-    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
       const user = await User.findOne({ username: req.user.username });
@@ -136,7 +130,6 @@ router
     })
   )
   .put(
-    checkAuth,
     validateTodo,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
@@ -154,7 +147,6 @@ router
     })
   )
   .delete(
-    checkAuth,
     catchAsync(async (req, res) => {
       const { groupId, todoId } = req.params;
       const user = await User.findOne({ username: req.user.username });
@@ -172,7 +164,6 @@ router
 
 router.put(
   "/:groupId/:todoId/:attribute",
-  checkAuth,
   catchAsync(async (req, res) => {
     const { groupId, todoId, attribute } = req.params;
     const user = await User.findOne({ username: req.user.username });
@@ -184,7 +175,7 @@ router.put(
     if (!attributes.includes(attribute)) {
       throw new ExpressError("Invalid attribute", 400);
     }
-  
+
     const todo = await Todo.findOneAndToggle(todoGroup._id, todoId, attribute);
     res.json(todo);
   })
