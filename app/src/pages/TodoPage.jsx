@@ -5,6 +5,7 @@ import { toggleAttribute, deleteTodo, getTodo } from "../utils/api";
 import { Button, ButtonGroup } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const TodoPage = () => {
   const [todo, setTodo] = useState({});
@@ -49,27 +50,39 @@ const TodoPage = () => {
   };
 
   return (
-    <>
-      <button onClick={() => navigate(`/todos/${groupId}`)}>Back</button>
-      <Todo
-        todo={todo}
-        toggleUrgent={() => toggleAttributeHandler("urgent")}
-        toggleCompleted={() => toggleAttributeHandler("completed")}
+    <div className="h-screen relative">
+      <ArrowBackIcon
+        sx={{ margin: "10px" }}
+        onClick={() => navigate(`/todos/${groupId}`)}
       />
-      <ButtonGroup variant="text" aria-label="text button group">
-        <Button onClick={() => navigate(`/todos/${groupId}/${todoId}/edit`)}>
-          <EditIcon />
-        </Button>
-        <Button onClick={deleteTodoHandler}>
-          <DeleteIcon />
-        </Button>
-      </ButtonGroup>
+      <div className="flex">
+        {todo === undefined ||
+        (Object.keys(todo).length === 0 && todo.constructor === Object) ? (
+          "Could not fetch todo"
+        ) : (
+          <Todo
+            todo={todo}
+            toggleUrgent={() => toggleAttributeHandler("urgent")}
+            toggleCompleted={() => toggleAttributeHandler("completed")}
+          />
+        )}
+      </div>
 
-      {todo === undefined ||
-      (Object.keys(todo).length === 0 && todo.constructor === Object)
-        ? "Could not fetch todo"
-        : ""}
-    </>
+      <div className="fixed bottom-2">
+        <ButtonGroup
+          sx={{ margin: "10px" }}
+          variant="text"
+          aria-label="text button group"
+        >
+          <Button onClick={() => navigate(`/todos/${groupId}/${todoId}/edit`)}>
+            <EditIcon />
+          </Button>
+          <Button onClick={deleteTodoHandler}>
+            <DeleteIcon />
+          </Button>
+        </ButtonGroup>
+      </div>
+    </div>
   );
 };
 

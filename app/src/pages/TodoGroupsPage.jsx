@@ -23,15 +23,22 @@ const TodoGroupsPage = () => {
   };
 
   return (
-    <>
-      <TodoGroups todoGroups={todoGroups} />
-      <Button variant="contained" onClick={() => navigate("/todos/new")}>
-        <AddCircle />
-      </Button>
-      {todoGroups === undefined || todoGroups.length == 0
-        ? "No todo groups"
-        : ""}
-    </>
+    <div className="h-screen relative">
+      {todoGroups === undefined || todoGroups.length == 0 ? (
+        "No todo groups"
+      ) : (
+        <TodoGroups todoGroups={todoGroups} />
+      )}
+      <div className="fixed bottom-2">
+        <Button
+          variant="contained"
+          sx={{ marginLeft: "10px" }}
+          onClick={() => navigate("/todos/new")}
+        >
+          <AddCircle />
+        </Button>
+      </div>
+    </div>
   );
 };
 

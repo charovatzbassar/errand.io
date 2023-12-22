@@ -12,7 +12,16 @@ import NotificationImportantIcon from "@mui/icons-material/NotificationImportant
 const Todo = ({ todo = {}, toggleUrgent, toggleCompleted }) => {
   return (
     <>
-      <Card sx={{ minWidth: 275 }} key={todo._id}>
+      <Card
+        sx={{
+          minWidth: 275,
+          margin: "10px",
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+        }}
+        key={todo._id}
+      >
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {formatDate(new Date(todo.date))}{" "}
