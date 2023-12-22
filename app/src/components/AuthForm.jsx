@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import { TextField, Button, Box } from "@mui/material";
 import AuthFormBackground from "./AuthFormBackground";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = ({ action, onSubmit }) => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -108,6 +110,15 @@ const AuthForm = ({ action, onSubmit }) => {
             </Button>
           </form>
         </Box>
+      </div>
+      <div className="flex justify-end p-5 w-screen fixed">
+        <Button
+          variant="text"
+          sx={{ color: "white", fontWeight: "bold" }}
+          onClick={() => navigate("/")}
+        >
+          Home
+        </Button>
       </div>
     </AuthFormBackground>
   );
