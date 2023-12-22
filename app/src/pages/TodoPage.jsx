@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import Todo from "../components/Todo";
 import { useParams, useNavigate } from "react-router-dom";
 import { toggleAttribute, deleteTodo, getTodo } from "../utils/api";
+import { Button, ButtonGroup } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 const TodoPage = () => {
   const [todo, setTodo] = useState({});
@@ -53,10 +56,15 @@ const TodoPage = () => {
         toggleUrgent={() => toggleAttributeHandler("urgent")}
         toggleCompleted={() => toggleAttributeHandler("completed")}
       />
-      <button onClick={() => navigate(`/todos/${groupId}/${todoId}/edit`)}>
-        Edit
-      </button>
-      <button onClick={deleteTodoHandler}>Delete</button>
+      <ButtonGroup variant="text" aria-label="text button group">
+        <Button onClick={() => navigate(`/todos/${groupId}/${todoId}/edit`)}>
+          <EditIcon />
+        </Button>
+        <Button onClick={deleteTodoHandler}>
+          <DeleteIcon />
+        </Button>
+      </ButtonGroup>
+
       {todo === undefined ||
       (Object.keys(todo).length === 0 && todo.constructor === Object)
         ? "Could not fetch todo"

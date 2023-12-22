@@ -2,6 +2,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import TodoGroup from "../components/TodoGroup";
 import { useState, useEffect } from "react";
 import { toggleAttribute, getTodoGroup, deleteTodoGroup } from "../utils/api";
+import { ButtonGroup, Button } from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 const TodoGroupPage = () => {
   const [group, setGroup] = useState([]);
@@ -55,13 +59,18 @@ const TodoGroupPage = () => {
     <>
       <button onClick={() => navigate("/todos")}>Back</button>
       <TodoGroup group={group} toggleAttribute={toggleAttributeHandler} />
-      <button onClick={() => navigate(`/todos/${groupId}/new`)}>
-        New Todo
-      </button>
-      <button onClick={() => navigate(`/todos/${groupId}/edit`)}>
-        Edit Group
-      </button>
-      <button onClick={deleteGroupHandler}>Delete Group</button>
+
+      <ButtonGroup variant="text" aria-label="text button group">
+        <Button onClick={() => navigate(`/todos/${groupId}/new`)}>
+          <AddCircleIcon />
+        </Button>
+        <Button onClick={() => navigate(`/todos/${groupId}/edit`)}>
+          <EditIcon />
+        </Button>
+        <Button onClick={deleteGroupHandler}>
+          <DeleteIcon />
+        </Button>
+      </ButtonGroup>
       {group === undefined || group.length == 0 ? "No todos" : ""}
     </>
   );
