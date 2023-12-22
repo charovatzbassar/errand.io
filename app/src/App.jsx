@@ -14,6 +14,7 @@ import ErrorPage from "./pages/ErrorPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
+import Navbar from "./components/Navbar";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "todos",
+        element: <Navbar />,
         children: [
           {
             path: "",
