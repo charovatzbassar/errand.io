@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Box, Typography, Stack } from "@mui/material";
+import { Button, Box, Stack } from "@mui/material";
 import { logout } from "../utils/auth";
-import Background from "../components/Background";
+import HomePageBackground from "../components/HomePageBackground";
 
 const HomePage = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Background>
+      <HomePageBackground>
         <div className="flex justify-end p-5 fixed w-screen">
           <Stack spacing={2} direction="row">
             {!localStorage.getItem("token") ? (
@@ -65,7 +65,7 @@ const HomePage = () => {
             </Button>
           </Box>
         </div>
-      </Background>
+      </HomePageBackground>
     </>
   );
 };
