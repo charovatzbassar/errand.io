@@ -1,15 +1,16 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
 import { TextField, Button, Switch } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const TodoForm = ({ action, onSubmit, data = {} }) => {
   const {
     handleSubmit,
     register,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -58,16 +59,27 @@ const TodoForm = ({ action, onSubmit, data = {} }) => {
       <div className="error">{errors.content && errors.content.message}</div>
       <div className="flex m-[10px]">
         <label htmlFor="urgent">Urgent</label>
-        <Switch {...register("urgent")} />
+        <Switch
+          {...register("urgent")}
+          checked={action === "EDIT" && data.urgent}
+        />
         <div className="error">{errors.urgent && errors.urgent.message}</div>
       </div>
 
-      <div className="flex flex-col m-[10px]">
-        <label htmlFor="deadline">Deadline</label>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker {...register("deadline")} sx={{ width: "230px" }} />
-        </LocalizationProvider>
-      </div>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Controller
+          name="deadline"
+          control={control}
+          defaultValue={action === "EDIT" ? new Date(data.deadline) : null}
+          render={({ field }) => (
+            <DatePicker
+              {...field}
+              label="Deadline"
+              renderInput={(params) => <TextField {...params} />}
+            />
+          )}
+        />
+      </LocalizationProvider>
 
       <div className="error">{errors.deadline && errors.deadline.message}</div>
       <Button

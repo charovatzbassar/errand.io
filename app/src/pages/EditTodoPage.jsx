@@ -19,7 +19,7 @@ const EditTodoPage = () => {
     const formattedData = {
       ...data,
       ...(data.deadline && {
-        deadline: data.deadline.slice(0, 10),
+        deadline: new Date(data.deadline),
       }),
     };
     setTodoData(formattedData);
