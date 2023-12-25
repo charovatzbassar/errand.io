@@ -46,6 +46,11 @@ router
         _id: groupId,
         user: user._id,
       });
+
+      if (todoGroup === null) {
+        throw new ExpressError("Invalid todo group", 400);
+      }
+
       const todos = await Todo.find({ todoGroup: todoGroup._id });
       res.json(todos);
     })
@@ -108,6 +113,9 @@ router.get(
     const { groupId } = req.params;
     const user = await User.findOne({ username: req.user.username });
     const todoGroup = await TodoGroup.findOne({ _id: groupId, user: user._id });
+    if (todoGroup === null) {
+      throw new ExpressError("Invalid todo group", 400);
+    }
     res.json(todoGroup);
   })
 );
@@ -122,6 +130,9 @@ router
         _id: groupId,
         user: user._id,
       });
+      if (todoGroup === null) {
+        throw new ExpressError("Invalid todo", 400);
+      }
       const todo = await Todo.findOne({
         _id: todoId,
         todoGroup: todoGroup._id,
