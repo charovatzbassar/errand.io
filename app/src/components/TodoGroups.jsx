@@ -20,7 +20,7 @@ const TodoGroups = ({ todoGroups }) => {
     </div>
   ));
 
-  return <div className="flex">{todoGroupsElement}</div>;
+  return <div className="flex flex-wrap">{todoGroupsElement}</div>;
 };
 
 export default TodoGroups;
