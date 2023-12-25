@@ -32,7 +32,7 @@ const EditTodoGroupPage = () => {
     <>
       <ArrowBackIcon
         sx={{ margin: "10px", cursor: "pointer" }}
-        onClick={() => navigate("/todos")}
+        onClick={() => navigate(`/todos/${groupId}`)}
       />{" "}
       <TodoGroupForm action="EDIT" onSubmit={onSubmit} data={todoGroupData} />
     </>

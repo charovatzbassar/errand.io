@@ -36,7 +36,7 @@ const Todo = ({ todo = {}, toggleUrgent, toggleCompleted }) => {
               transition: "0.25s",
             }}
           >
-            {todo.title}
+            <Link to={`/todos/${todo.todoGroup}/${todo._id}`}>{todo.title}</Link>
           </Typography>
           {todo.deadline && (
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -46,9 +46,6 @@ const Todo = ({ todo = {}, toggleUrgent, toggleCompleted }) => {
           <Typography variant="body2">{todo.content}</Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">
-            <Link to={`/todos/${todo.todoGroup}/${todo._id}`}>View Todo </Link>
-          </Button>
           <ButtonGroup variant="text" aria-label="text button group">
             <Button onClick={toggleCompleted}>Check</Button>
             <Button onClick={toggleUrgent}>Urgent</Button>
