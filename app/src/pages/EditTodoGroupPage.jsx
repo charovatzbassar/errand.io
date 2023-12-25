@@ -3,6 +3,7 @@ import TodoGroupForm from "../components/TodoGroupForm";
 import { getTodoGroupData, updateTodoGroup } from "../utils/api";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const EditTodoGroupPage = () => {
   const [todoGroupData, setTodoGroupData] = useState({});
@@ -29,7 +30,10 @@ const EditTodoGroupPage = () => {
 
   return (
     <>
-      <button onClick={() => navigate(`/todos/${groupId}`)}>Back</button>
+      <ArrowBackIcon
+        sx={{ margin: "10px", cursor: "pointer" }}
+        onClick={() => navigate("/todos")}
+      />{" "}
       <TodoGroupForm action="EDIT" onSubmit={onSubmit} data={todoGroupData} />
     </>
   );
