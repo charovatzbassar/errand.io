@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import TodoForm from "../components/TodoForm";
 import { createTodo } from "../utils/api";
 import { useState } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const CreateTodoPage = () => {
   const [error, setError] = useState("");
@@ -34,7 +35,10 @@ const CreateTodoPage = () => {
   };
   return (
     <>
-      <button onClick={() => navigate(`/todos/${groupId}`)}>Back</button>
+      <ArrowBackIcon
+        sx={{ margin: "10px", cursor: "pointer" }}
+        onClick={() => navigate(`/todos/${groupId}`)}
+      />{" "}
       <TodoForm action="CREATE" onSubmit={onSubmit} />
       {error}
     </>

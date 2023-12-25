@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { TextField, Button, Box } from "@mui/material";
 
 const TodoGroupForm = ({ action, onSubmit, data = {} }) => {
   const {
@@ -29,17 +30,23 @@ const TodoGroupForm = ({ action, onSubmit, data = {} }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="title">Group Title</label>
-      <div className="form-group">
-        <input
-          {...register("title", { required: "Group title is required!" })}
-          type="text"
-        />
-        <div className="error">{errors.title && errors.title.message}</div>
-      </div>
-      <div className="form-group">
-        <button>{buttonMessage} Group</button>
-      </div>
+      <TextField
+        sx={{ margin: "10px" }}
+        label={action === "CREATE" ? "Group Title" : ""}
+        variant="outlined"
+        type="title"
+        {...register("title", { required: "Group title is required!" })}
+      />
+      <div className="error">{errors.title && errors.title.message}</div>
+
+      <Button
+        sx={{ margin: "10px" }}
+        type="submit"
+        variant="contained"
+        color="primary"
+      >
+        {buttonMessage} Group
+      </Button>
     </form>
   );
 };

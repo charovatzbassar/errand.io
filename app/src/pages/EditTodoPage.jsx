@@ -3,6 +3,7 @@ import TodoForm from "../components/TodoForm";
 import { getTodo, updateTodo } from "../utils/api";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const EditTodoPage = () => {
   const [todoData, setTodoData] = useState({});
@@ -18,7 +19,7 @@ const EditTodoPage = () => {
     const formattedData = {
       ...data,
       ...(data.deadline && {
-        deadline: data.deadline.slice(0, 10),
+        deadline: new Date(data.deadline),
       }),
     };
     setTodoData(formattedData);
@@ -44,9 +45,10 @@ const EditTodoPage = () => {
 
   return (
     <>
-      <button onClick={() => navigate(`/todos/${groupId}/${todoId}`)}>
-        Back
-      </button>
+      <ArrowBackIcon
+        sx={{ margin: "10px", cursor: "pointer" }}
+        onClick={() => navigate(`/todos/${groupId}/${todoId}`)}
+      />{" "}
       <TodoForm action="EDIT" onSubmit={onSubmit} data={todoData} />
     </>
   );

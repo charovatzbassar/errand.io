@@ -2,7 +2,7 @@ import Todo from "./Todo";
 
 const TodoGroup = ({ group = [], toggleAttribute }) => {
   return (
-    <>
+    <div className="flex flex-wrap">
       {group.map((todo) => (
         <Todo
           key={todo._id}
@@ -11,7 +11,8 @@ const TodoGroup = ({ group = [], toggleAttribute }) => {
           toggleUrgent={() => toggleAttribute("urgent", todo._id)}
         />
       ))}
-    </>
+
+    </div>
   );
 };
 

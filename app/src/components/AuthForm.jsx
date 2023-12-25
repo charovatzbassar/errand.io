@@ -1,5 +1,10 @@
 import { useForm } from "react-hook-form";
+import { TextField, Button, Box } from "@mui/material";
+import AuthFormBackground from "./AuthFormBackground";
+import { useNavigate } from "react-router-dom";
+
 const AuthForm = ({ action, onSubmit }) => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -8,72 +13,114 @@ const AuthForm = ({ action, onSubmit }) => {
   } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {action === "REGISTER" && (
-        <>
-          <label htmlFor="email">Email</label>
-          <div className="form-group">
-            <input
-              {...register("email", { required: "Email is required!" })}
-              type="email"
-            />
-            <div className="error">{errors.email && errors.email.message}</div>
-          </div>
-        </>
-      )}
-      <label htmlFor="username">Username</label>
-      <div className="form-group">
-        <input
-          {...register("username", { required: "Username is required!" })}
-          type="text"
-        />
-        <div className="error">
-          {errors.username && errors.username.message}
-        </div>
-      </div>
-      <label htmlFor="password">Password</label>
-      <div className="form-group">
-        <input
-          {...register("password", {
-            required: "Password is required!",
-            pattern: {
-              value:
-                /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[0-9a-zA-Z!@#$%^&*()_+]{6,}$/,
-              message:
-                "Password must contain an uppercase character, a number, a special character, and must be at least 6 characters long",
-            },
-          })}
-          type="password"
-        />
-        <div className="error">
-          {errors.password && errors.password.message}
-        </div>
-      </div>
-      {action === "REGISTER" && (
-        <>
-          {" "}
-          <label htmlFor="repeatPassword">Repeat Password</label>
-          <div className="form-group">
-            <input
-              {...register("repeatPassword", {
-                required: "Please repeat the password!",
-                validate: {
-                  passwordsEqual: (value) =>
-                    value === getValues().password || "Passwords must match!",
-                },
-              })}
-              type="password"
+    <AuthFormBackground>
+      <div className="flex justify-center items-center h-screen w-screen fixed">
+        <Box
+          sx={{
+            width: "500px",
+            height: "500px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            py: 3,
+            px: 3,
+            backgroundColor: "white",
+            borderRadius: "1em",
+          }}
+        >
+          <h5 className="text-lg text-center sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+            {action === "REGISTER"
+              ? "Register to Errand.io"
+              : "Log in to Errand.io"}{" "}
+          </h5>
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col m-5">
+            {action === "REGISTER" && (
+              <>
+                <TextField
+                  sx={{ marginBottom: "20px" }}
+                  label="Email"
+                  variant="outlined"
+                  type="email"
+                  {...register("email", { required: "Email is required!" })}
+                />
+                <div className="error">
+                  {errors.email && errors.email.message}
+                </div>
+              </>
+            )}
+            <TextField
+              sx={{ marginBottom: "20px" }}
+              label="Username"
+              {...register("username", { required: "Username is required!" })}
             />
             <div className="error">
-              {errors.repeatPassword && errors.repeatPassword.message}
+              {errors.username && errors.username.message}
             </div>
-          </div>
-        </>
-      )}
-      <div className="form-group">
-        <button>{action === "REGISTER" ? "Register" : "Login"}</button>
+            <TextField
+              sx={{ marginBottom: "20px" }}
+              {...register("password", {
+                required: "Password is required!",
+                pattern:
+                  action === "REGISTER"
+                    ? {
+                        value:
+                          /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()_+])[0-9a-zA-Z!@#$%^&*()_+]{6,}$/,
+                        message:
+                          "Password must contain an uppercase character, a number, a special character, and must be at least 6 characters long",
+                      }
+                    : null,
+              })}
+              label="Password"
+              type="password"
+              variant="outlined"
+            />
+            <div className="error">
+              {errors.password && errors.password.message}
+            </div>
+            {action === "REGISTER" && (
+              <>
+                {" "}
+                <TextField
+                  sx={{ marginBottom: "20px" }}
+                  variant="outlined"
+                  label="Repeat Password"
+                  {...register("repeatPassword", {
+                    required: "Please repeat the password!",
+                    validate: {
+                      passwordsEqual: (value) =>
+                        value === getValues().password ||
+                        "Passwords must match!",
+                    },
+                  })}
+                  type="password"
+                />
+                <div className="error">
+                  {errors.repeatPassword && errors.repeatPassword.message}
+                </div>
+              </>
+            )}
+
+            <Button
+              sx={{ marginBottom: "20px" }}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              {action === "REGISTER" ? "Register" : "Login"}
+            </Button>
+          </form>
+        </Box>
       </div>
-    </form>
+      <div className="flex justify-end p-5 w-screen fixed">
+        <Button
+          variant="text"
+          sx={{ color: "white", fontWeight: "bold" }}
+          onClick={() => navigate("/")}
+        >
+          Home
+        </Button>
+      </div>
+    </AuthFormBackground>
   );
 };
 
