@@ -8,6 +8,10 @@ const CreateTodoGroupPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    
+  }, []);
+
   const onSubmit = async (data) => {
     try {
       const res = await createTodoGroup(data);

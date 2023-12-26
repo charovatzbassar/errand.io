@@ -3,7 +3,8 @@ import axios from "axios";
 export const toggleAttribute = async (todoId, groupId, attribute) => {
   try {
     const res = await axios.put(
-      `http://localhost:3000/todos/${groupId}/${todoId}/${attribute}`, {},
+      `http://localhost:3000/todos/${groupId}/${todoId}/${attribute}`,
+      {},
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
@@ -40,6 +41,10 @@ export const getTodo = async (todoId, groupId) => {
     );
     return res.data;
   } catch (e) {
+    if (e.response.status === 400) {
+      window.location.href = "/todos";
+      return;
+    }
     return {};
   }
 };
@@ -53,6 +58,10 @@ export const getTodoGroup = async (groupId) => {
     });
     return res.data;
   } catch (e) {
+    if (e.response.status === 400) {
+      window.location.href = "/todos";
+      return;
+    }
     return [];
   }
 };
@@ -115,6 +124,10 @@ export const getTodoGroupData = async (groupId) => {
     });
     return res.data;
   } catch (e) {
+    if (e.response.status === 400) {
+      window.location.href = "/todos";
+      return;
+    }
     return {};
   }
 };
